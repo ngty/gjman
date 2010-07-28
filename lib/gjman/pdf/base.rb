@@ -16,7 +16,6 @@ module Gjman
         end
 
         def shell(cmd, args)
-          puts %|#{cmd} #{[args].flatten.join(' ')}|
           %x|#{cmd} #{[args].flatten.join(' ')}|
         end
 
