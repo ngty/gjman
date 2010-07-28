@@ -3,12 +3,14 @@ module Gjman
     class Compressor < Base
       class << self
 
-        def do(src, dest)
-          work(:Compress, src, dest, src.sub(/\.pdf$/, '-o.pdf'))
+        def do(src, opts={})
+          default_dest = src.sub(/\.pdf$/, '-o.pdf')
+          work(:Compress, src, opts.delete(:to) || default_dest, default_dest)
         end
 
-        def undo(src, dest)
-          work(:Uncompress, src, dest, src.sub(/\.pdf$/, '-u.pdf'))
+        def undo(src, opts={})
+          default_dest = src.sub(/\.pdf$/, '-u.pdf')
+          work(:Uncompress, src, opts.delete(:to) || default_dest, default_dest)
         end
 
         private
