@@ -16,3 +16,27 @@ def tmp_file(file_name)
   (($trashable_tmp_files ||= []) << Tempfile.new(file_name))[-1]
 end
 
+def equal_in_size_as(expected_file)
+  lambda do |subject_file|
+    subject_file_size = File.size(subject_file)
+    expected_file_size = File.size(expected_file)
+    (subject_file_size - expected_file_size).zero?
+  end
+end
+
+def smaller_in_size_than(expected_file)
+  lambda do |subject_file|
+    subject_file_size = File.size(subject_file)
+    expected_file_size = File.size(expected_file)
+    (subject_file_size - expected_file_size) < 0
+  end
+end
+
+def bigger_in_size_than(expected_file)
+  lambda do |subject_file|
+    subject_file_size = File.size(subject_file)
+    expected_file_size = File.size(expected_file)
+    (subject_file_size - expected_file_size) > 0
+  end
+end
+
