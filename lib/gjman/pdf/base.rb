@@ -12,11 +12,11 @@ module Gjman
 
         def java(mode, args)
           class_path = CLASS_PATHS[mode]
-          %x|java -cp #{class_path} #{[args].flatten.join(' ')}|
+          %x|java -cp #{class_path} #{[args].flatten.join(' ')} 2>&1|
         end
 
         def shell(cmd, args)
-          %x|#{cmd} #{[args].flatten.join(' ')}|
+          %x|#{cmd} #{[args].flatten.join(' ')} 2>&1|
         end
 
       end
