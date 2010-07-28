@@ -10,17 +10,19 @@ describe "Gjman::PDF as compressor" do
   describe '>> uncompressing' do
 
     before do
-      @uncompress = lambda do |name|
-        Gjman::PDF.uncompress(data_file(name), tmp_file('uncompressed').path)
+      @should_reflect_uncompressed_size = lambda do |name|
+        uncompressed_file = Gjman::PDF.uncompress(data_file(name), tmp_file('uncompressed').path)
+        uncompressed_file.should.be equal_in_size_as(data_file(:uncompressed))
+        uncompressed_file.should.be bigger_in_size_than(data_file(:compressed))
       end
     end
 
     should 'not uncompress when pdf is uncompressed' do
-      @uncompress[:uncompressed].should.be having_same_content_as(:uncompressed)
+      @should_reflect_uncompressed_size[:uncompressed]
     end
 
     should 'uncompress when pdf is compressed' do
-      @uncompress[:compressed].should.be having_same_content_as(:uncompressed)
+      @should_reflect_uncompressed_size[:uncompressed]
     end
 
   end
@@ -28,17 +30,19 @@ describe "Gjman::PDF as compressor" do
   describe '>> compressing' do
 
     before do
-      @compress = lambda do |name|
-        Gjman::PDF.compress(data_file(name), tmp_file('compressed').path)
+      @should_reflect_compressed_size = lambda do |name|
+        compressed_file = Gjman::PDF.compress(data_file(name), tmp_file('compressed').path)
+        compressed_file.should.be equal_in_size_as(data_file(:compressed))
+        compressed_file.should.be smaller_in_size_than(data_file(:uncompressed))
       end
     end
 
     should 'not compress when pdf is compressed' do
-      @compress[:compressed].should.be having_same_content_as(:compressed)
+      @should_reflect_compressed_size[:compressed]
     end
 
     should 'compress when pdf is uncompressed' do
-      @compress[:uncompressed].should.be having_same_content_as(:compressed)
+      @should_reflect_compressed_size[:uncompressed]
     end
 
   end
