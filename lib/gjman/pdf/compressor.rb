@@ -16,7 +16,8 @@ module Gjman
         private
 
          def pdftk(mode, src, dest)
-           shell(:pdftk, [src, :output, dest, mode])
+           debug = shell(:pdftk, [src, :output, dest, mode, :verbose])
+           $stdout.puts '', debug if Gjman.verbose
            dest
          end
 
