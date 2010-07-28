@@ -87,3 +87,14 @@ describe 'Gjman::FileSystem (trashable temp files)' do
   end
 
 end
+
+describe 'Gjman::FileSystem (tmp dir)' do
+
+  it 'should remove tmp dir after block execution' do
+    tmp_dir = nil
+    Gjman::FileSystem.tmp_dir{|dir| tmp_dir = dir }
+    tmp_dir.should.not.be.nil
+    File.exists?(tmp_dir).should.be.false
+  end
+
+end
