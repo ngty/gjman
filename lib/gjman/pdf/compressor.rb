@@ -4,16 +4,16 @@ module Gjman
       class << self
 
         def do(src, dest)
-          multivalent(:Compress, src, dest, src.sub(/\.pdf$/, '-o.pdf'))
+          work(:Compress, src, dest, src.sub(/\.pdf$/, '-o.pdf'))
         end
 
         def undo(src, dest)
-          multivalent(:Uncompress, src, dest, src.sub(/\.pdf$/, '-u.pdf'))
+          work(:Uncompress, src, dest, src.sub(/\.pdf$/, '-u.pdf'))
         end
 
         private
 
-         def multivalent(mode, src, dest, tmp_dest)
+         def work(mode, src, dest, tmp_dest)
            case java(:multivalent, %W{tool.pdf.#{mode} #{src}})
            when /Already compressed\.  \(Force recompression with \-force\.\)/,
              /java\.lang\.ArrayIndexOutOfBoundsException/
