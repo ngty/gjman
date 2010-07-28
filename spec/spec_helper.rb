@@ -18,9 +18,9 @@ end
 
 def equal_in_size_as(expected_file)
   lambda do |subject_file|
-    subject_file_size = File.size(subject_file)
-    expected_file_size = File.size(expected_file)
-    (subject_file_size - expected_file_size).zero?
+    subject_file_size = File.size(subject_file).to_f
+    expected_file_size = File.size(expected_file).to_f
+    ((subject_file_size - expected_file_size).abs / subject_file_size) < 0.0001
   end
 end
 
