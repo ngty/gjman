@@ -1,3 +1,4 @@
+require 'gjman'
 require 'gjman/pdf/utils'
 require 'gjman/pdf/base'
 require 'gjman/pdf/matcher'
