@@ -19,9 +19,6 @@ module Gjman
         end
 
         def same_images?(pdf_x, pdf_y)
-          puts '', pdf_x, images(pdf_x)
-          puts '', pdf_y, images(pdf_y)
-
           images(pdf_x).split("\n")[1..-1] == images(pdf_y).split("\n")[1..-1]
         end
 
