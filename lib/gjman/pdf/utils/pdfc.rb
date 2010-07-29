@@ -38,7 +38,7 @@ module Gjman
         def self.extract_args(mode, args)
           raise NotSupportedServiceError unless mode == :diff
           [
-            service,
+            SERVICE,
             [args].flatten.compact.join(' ')
           ]
         end

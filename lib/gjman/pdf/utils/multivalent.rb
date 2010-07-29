@@ -46,7 +46,7 @@ module Gjman
           (service_args = SERVICES[mode]) or raise NotSupportedServiceError
           [
             service_args[0],
-            service_args[1..-1], args].flatten.compact.join(' ')
+            [service_args[1..-1], args].flatten.compact.join(' ')
           ]
         end
 
