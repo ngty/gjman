@@ -12,8 +12,13 @@ module Gjman
           ACTIONS = {
             :compress   => 'tool.pdf.Compress',
             :uncompress => 'tool.pdf.Uncompress',
-            :merge      => 'tool.pdf.Merge'
+            :merge      => 'tool.pdf.Merge',
+            :fonts      => 'tool.pdf.Info --fonts'
           }
+
+          def same_fonts?(pdf_x, pdf_y)
+            fonts(pdf_x).split("\n")[1..-1] == fonts(pdf_y).split("\n")[1..-1]
+          end
 
           def method_missing(mode, args)
             action, args = ACTIONS[mode], [args].flatten.join(' ')

@@ -5,7 +5,8 @@ module Gjman
 
         def test(pdf_x, pdf_y)
           begin
-            diff(uncompress(pdf_x, pdf_y)) !~ %r{\| # of Differences.*\-+.*(\| [1-9]+)}m
+            tmp_x, tmp_y = uncompress(pdf_x, pdf_y)
+            same_fonts?(tmp_x, tmp_y) && same_contents?(tmp_x, tmp_y)
           ensure
             FileSystem.trash_tmp_files
           end
