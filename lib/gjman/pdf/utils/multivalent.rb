@@ -13,7 +13,7 @@ module Gjman
             :compress   => 'tool.pdf.Compress',
             :uncompress => 'tool.pdf.Uncompress',
             :merge      => 'tool.pdf.Merge',
-            :fonts      => 'tool.pdf.Info --fonts',
+            :fonts      => 'tool.doc.ExtractText --output xml --style',
             :images     => 'tool.pdf.Info --images',
           }
 

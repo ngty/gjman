@@ -15,10 +15,12 @@ module Gjman
         end
 
         def same_fonts?(pdf_x, pdf_y)
-          fonts(pdf_x).split("\n")[1..-1] == fonts(pdf_y).split("\n")[1..-1]
+          # The last line shows processing stats (which we don't need)
+          fonts(pdf_x).split("\n")[0..-2] == fonts(pdf_y).split("\n")[0..-2]
         end
 
         def same_images?(pdf_x, pdf_y)
+          # The fist line shows file name (which we don't need)
           images(pdf_x).split("\n")[1..-1] == images(pdf_y).split("\n")[1..-1]
         end
 
