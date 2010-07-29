@@ -5,8 +5,7 @@ module Gjman
 
         def test(pdf_x, pdf_y)
           begin
-            tmp_x, tmp_y = [pdf_x, pdf_y].map{|pdf| uncompress(pdf) }
-            java(:pdfc, [tmp_x, tmp_y]) !~ %r{\| # of Differences.*\-+.*(\| [1-9]+)}m
+            diff(uncompress(pdf_x, pdf_y)) !~ %r{\| # of Differences.*\-+.*(\| [1-9]+)}m
           ensure
             FileSystem.trash_tmp_files
           end
@@ -14,10 +13,11 @@ module Gjman
 
         private
 
-          def uncompress(pdf)
-            Gjman::PDF.uncompress(
-              pdf, :to => FileSystem.tmp_file([Digest::MD5.hexdigest(pdf),'.pdf']).path
-            )
+          def uncompress(*pdfs)
+            [pdfs].flatten.map do |pdf|
+              tmp = FileSystem.tmp_file([Digest::MD5.hexdigest(pdf),'.pdf']).path
+              PDF.uncompress(pdf, :to => tmp)
+            end
           end
 
       end

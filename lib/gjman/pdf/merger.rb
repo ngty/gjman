@@ -13,7 +13,7 @@ module Gjman
         private
 
           def work(srcs, dest, tmp_dest)
-            java(:multivalent, %W{tool.pdf.Merge #{srcs.join(' ')}})
+            merge(srcs)
             File.move(tmp_dest, dest) unless dest == tmp_dest
             dest
           end

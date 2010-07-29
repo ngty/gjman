@@ -5,18 +5,18 @@ module Gjman
 
         def do(src, opts={})
           default_dest = src.sub(/\.pdf$/, '-o.pdf')
-          work(:Compress, src, opts.delete(:to) || default_dest, default_dest)
+          work(:compress, src, opts.delete(:to) || default_dest, default_dest)
         end
 
         def undo(src, opts={})
           default_dest = src.sub(/\.pdf$/, '-u.pdf')
-          work(:Uncompress, src, opts.delete(:to) || default_dest, default_dest)
+          work(:uncompress, src, opts.delete(:to) || default_dest, default_dest)
         end
 
         private
 
-         def work(mode, src, dest, tmp_dest)
-           case java(:multivalent, %W{tool.pdf.#{mode} #{src}})
+         def work(action, src, dest, tmp_dest)
+           case send(action, src)
            when /Already compressed\.  \(Force recompression with \-force\.\)/,
              /java\.lang\.ArrayIndexOutOfBoundsException/
              File.copy(src, dest)
