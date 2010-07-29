@@ -12,8 +12,13 @@ module Gjman
     end
 
   class << self
+
     def root(*args)
       args.size == 0 ? ROOT : File.join(ROOT, *args)
+    end
+
+    def ext(*args)
+      root(*['ext', args].flatten)
     end
   end
 

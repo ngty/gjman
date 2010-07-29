@@ -6,7 +6,7 @@ module Gjman
         class NotSupportedServiceError < Exception ; end
 
         SERVICE = 'com.inet.pdfc.PDFC'
-        JARS = %w{CCLib log4j-1.2.15 PDFC PDFParser}.map{|n| Gjman.root('java','pdfc',"#{n}.jar") }.join(':')
+        JARS = %w{CCLib log4j-1.2.15 PDFC PDFParser}.map{|n| Gjman.ext('pdfc',"#{n}.jar") }.join(':')
         Gjman::JAVA_LIBS << JARS
 
         module JRuby

@@ -5,7 +5,7 @@ module Gjman
 
         class NotSupportedServiceError < Exception ; end
 
-        JARS = Gjman.root('java', 'multivalent', 'Multivalent20060102.jar')
+        JARS = Gjman.ext('multivalent', 'Multivalent20060102.jar')
         Gjman::JAVA_LIBS << JARS
 
         SERVICES = {
