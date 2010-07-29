@@ -6,7 +6,8 @@ module Gjman
         class NotSupportedServiceError < Exception ; end
 
         JARS = Gjman.root('java', 'multivalent', 'Multivalent20060102.jar')
-        Gjman::JARS << JARS
+        Gjman::JAVA_LIBS << JARS
+
         SERVICES = {
           :compress   => %w{tool.pdf.Compress},
           :uncompress => %w{tool.pdf.Uncompress},
@@ -16,19 +17,23 @@ module Gjman
         }
 
         module JRuby
+          def method_missing(mode, *args)
+            Gjman::JRuby.sandbox do
+              service, args = extract_args(mode, args)
+              Gjman::JRuby.classify(service).main(args.split(' '))
+            end
+          end
         end
 
         module Rjb
           def method_missing(mode, *args)
-            service, args = extract_args(mode, args)
-            Gjman.rjb_load
-            # * need to confirm if setting this helps: export LD_LIBRARY_PATH=/opt/java/jre/lib/amd64
-            # * need to prevent java from calling system exit the following code
-            ::Rjb.import(service).main(args.split(' '))
+            Gjman::Rjb.sandbox do
+              service, args = extract_args(mode, args)
+              Gjman::Rjb.classify(service).main(args.split(' '))
+            end
           end
         end
 
-        # Most inefficient processor !!
         module Shell
           def method_missing(mode, *args)
             service, args = extract_args(mode, args)
@@ -38,11 +43,14 @@ module Gjman
         end
 
         def self.extract_args(mode, args)
-          (service = SERVICES[mode]) or raise NotSupportedServiceError
-          [service[0], [service[1..-1], args].flatten.compact.join(' ')]
+          (service_args = SERVICES[mode]) or raise NotSupportedServiceError
+          [
+            service_args[0],
+            service_args[1..-1], args].flatten.compact.join(' ')
+          ]
         end
 
-        extend const_get(Gjman::JMODE)
+        extend const_get(Gjman::JAVA_MODE)
 
       end
     end

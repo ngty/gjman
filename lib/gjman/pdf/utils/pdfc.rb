@@ -7,23 +7,26 @@ module Gjman
 
         SERVICE = 'com.inet.pdfc.PDFC'
         JARS = %w{CCLib log4j-1.2.15 PDFC PDFParser}.map{|n| Gjman.root('java','pdfc',"#{n}.jar") }.join(':')
-        Gjman::JARS << JARS
+        Gjman::JAVA_LIBS << JARS
 
         module JRuby
+          def method_missing(mode, *args)
+            Gjman::JRuby.sandbox do
+              service, args = extract_args(mode, args)
+              Gjman::JRuby.classify(service).main(args.split(' '))
+            end
+          end
         end
 
         module Rjb
           def method_missing(mode, *args)
-            service, args = extract_args(mode, args)
-            Gjman.rjb_load
-            # TODO:
-            # * need to confirm if setting this helps: export LD_LIBRARY_PATH=/opt/java/jre/lib/amd64
-            # * need to prevent java from calling system exit the following code
-            ::Rjb.import(service).main(args.split(' '))
+            Gjman::Rjb.sandbox do
+              service, args = extract_args(mode, args)
+              Gjman::Rjb.classify(service).main(args.split(' '))
+            end
           end
         end
 
-        # Most inefficient processor !!
         module Shell
           def method_missing(mode, *args)
             service, args = extract_args(mode, args)
@@ -34,10 +37,13 @@ module Gjman
 
         def self.extract_args(mode, args)
           raise NotSupportedServiceError unless mode == :diff
-          [SERVICE, [args].flatten.compact.join(' ')]
+          [
+            service,
+            [args].flatten.compact.join(' ')
+          ]
         end
 
-        extend const_get(Gjman::JMODE)
+        extend const_get(Gjman::JAVA_MODE)
 
       end
     end
