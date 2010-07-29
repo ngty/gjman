@@ -5,8 +5,11 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "gjman"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Gjman is a handyman with some useful tools}
+    gem.description = %Q{
+      Gjman is intended to be my neighbourhood friendly handyman with some useful tools.
+      Tools available will remain diverse, and are added as and when i need them.
+    }
     gem.email = "ngty77@gmail.com"
     gem.homepage = "http://github.com/ngty/gjman"
     gem.authors = ["NgTzeYang"]
