@@ -1,3 +1,6 @@
+require File.join(File.dirname(__FILE__), '..', 'spec_helper')
+require 'gjman/pdf'
+
 def data_file(name)
   File.join(File.expand_path(File.dirname(__FILE__)), 'data', "#{name}.pdf")
 end
