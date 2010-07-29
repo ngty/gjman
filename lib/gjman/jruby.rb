@@ -6,7 +6,7 @@ module Gjman
         @initialized ||= (
           include Java
           Gjman::JARS.join(':').split(':').each{|jar| require jar }
-          $CLASSPATH << root('gjman','hack')
+          $CLASSPATH << root('gjman','java_hacks')
           java_import 'ForbidSystemExit'
           true
         )
