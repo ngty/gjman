@@ -1,9 +1,45 @@
-= gjman
+= GJMAN is a handyman with some useful tools
 
-Description goes here.
+Gjman is my neighbourhood friendly handyman with some useful tools.
+Tools available will remain diverse, and are added as and when i need them.
+
+== Getting Started
+
+It's hosted on gemcutter.org.
+
+  $ sudo gem install gjman
+
+Under the hood, gjman uses some java libs, u can either run it using:
+
+* jruby, or
+* any rubies with rjb installed, or
+* any rubies, as long as java can be found in $PATH
+
+== PDF Tools
+
+=== 1. Merging (2 or more pdfs)
+
+  require 'gjman/pdf'
+  Gjman::PDF.merge('/path/to/pdf1', '/path/to/pdf2', '/path/to/pdf3')
+  # >> merges the 3 pdfs & return the merged pdf path
+
+  Gjman::PDF.merge('/path/to/pdf1', '/path/to/pdf2', :to => '/path/to/merged/pdf')
+  # >> merges the pdfs & return the merged pdf path, which is '/path/to/merged/pdf'
+
+=== 2. Testing if 2 pdfs have the same content
+
+  require 'gjman/pdf'
+  Gjman::PDF.match?('/path/to/pdf1', '/path/to/pdf2')
+  # >> true if the 2 pdfs have the same content
+
+Note:
+* textual comparison takes into account wordings, positioning, sizes, fonts, colors,
+  backgrounds & styles (bold, italic, etc)
+* image comparison takes into account positioning, size, & byte length (if 2 images
+  share the same byte length, they are taken to be the same)
 
 == Note on Patches/Pull Requests
- 
+
 * Fork the project.
 * Make your feature addition or bug fix.
 * Add tests for it. This is important so I don't break it in a
@@ -14,4 +50,4 @@ Description goes here.
 
 == Copyright
 
-Copyright (c) 2010 NgTzeYang. See LICENSE for details.
+Copyright (c) 2010 ngty77[at]gmail[dot]com. See LICENSE for details.
