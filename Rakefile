@@ -7,7 +7,7 @@ begin
     gem.name = "gjman"
     gem.summary = %Q{Gjman is a handyman with some useful tools}
     gem.description = %Q{
-      Gjman is intended to be my neighbourhood friendly handyman with some useful tools.
+      Gjman is my neighbourhood friendly handyman with some useful tools.
       Tools available will remain diverse, and are added as and when i need them.
     }
     gem.email = "ngty77@gmail.com"
