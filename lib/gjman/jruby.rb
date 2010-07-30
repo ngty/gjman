@@ -5,8 +5,8 @@ module Gjman
       def initialize
         @initialized ||= (
           include Java
-          Gjman::JARS.join(':').split(':').each{|jar| require jar }
-          $CLASSPATH << root('gjman','java_hacks')
+          Gjman::JAVA_LIBS.join(':').split(':').each{|jar| require jar }
+          $CLASSPATH << Gjman.root('gjman','java_hacks')
           java_import 'ForbidSystemExit'
           true
         )
