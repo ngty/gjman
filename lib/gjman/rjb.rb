@@ -4,7 +4,9 @@ module Gjman
 
       def initialize
         @initialized ||= (
-          Rjb::load(Gjman::JARS.join(':'))
+          ::Rjb::load([Gjman::JAVA_LIBS, Gjman.root('gjman','java_hacks')].flatten.join(':'))
+          @forbid_system_exit = classify('ForbidSystemExit')
+          @forbid_system_exit_error = @forbid_system_exit.class.const_get(:Exception)
           true
         )
       end
@@ -15,7 +17,14 @@ module Gjman
 
       def sandbox(&block)
         initialize
-        # TODO: outstanding
+        begin
+          @forbid_system_exit.apply
+          @result = yield
+        rescue @forbid_system_exit_error
+          @result
+        ensure
+          @forbid_system_exit.unapply
+        end
       end
 
     end
