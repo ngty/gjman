@@ -1,5 +1,7 @@
 import java.security.Permission;
 
+// Copy-&-pasted (almost) from
+// http://www.jroller.com/ethdsy/entry/disabling_system_exit
 class ForbidSystemExit
 {
   public static class Exception extends SecurityException { }
@@ -7,7 +9,7 @@ class ForbidSystemExit
   public static void apply() {
     final SecurityManager securityManager = new SecurityManager() {
       public void checkPermission( Permission permission ) {
-        if( "exitVM".equals( permission.getName() ) ) {
+        if( permission.getName().startsWith("exitVM") ) {
           throw new Exception() ;
         }
       }
