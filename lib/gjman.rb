@@ -6,10 +6,14 @@ module Gjman
 
   ROOT = File.join(File.expand_path(File.dirname(__FILE__)))
   JAVA_LIBS = []
-  JAVA_MODE = case RUBY_PLATFORM
-    when /java/i then :JRuby
-    else (require 'rjb' ; :Rjb) rescue :Shell
+  JAVA_MODE =  RUBY_PLATFORM =~ /java/i ? :JRuby : (
+    begin
+      require 'rjb'
+      :Rjb
+    rescue LoadError
+      :Shell
     end
+  )
 
   class << self
 
