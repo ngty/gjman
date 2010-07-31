@@ -14,6 +14,8 @@ begin
     gem.homepage = "http://github.com/ngty/gjman"
     gem.authors = ["NgTzeYang"]
     gem.add_development_dependency "bacon", ">= 0"
+    # Optional dependencies:
+    # gem.add_dependency 'rjb', '>= 1.2.6'
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
